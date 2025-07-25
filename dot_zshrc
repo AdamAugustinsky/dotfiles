@@ -16,13 +16,14 @@ export GO_BIN="$HOME/go/bin"
 export PATH="$BUN_INSTALL/bin:$CARGO_BIN:$GO_BIN:$PATH"
 
 # Aliases
+alias htop="btop"
 alias ll="eza -l -g --icons --git"
 alias ls="eza --icons"
 alias la="eza -la --icons --git"
 alias tree="eza --tree --icons"
 alias cat="bat"
 alias vim="nvim"
-alias rice="~/.config/rice/launch.sh"
+alias v="nvim"
 alias reload="source ~/.zshrc"
 
 # Starship prompt
