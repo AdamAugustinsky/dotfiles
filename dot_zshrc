@@ -1,0 +1,47 @@
+# Enable Powerlevel10k instant prompt
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# bun completions
+[ -s "/Users/adamaxelaugustinsky/.bun/_bun" ] && source "/Users/adamaxelaugustinsky/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export CARGO_BIN="$HOME/.cargo/bin"
+export GO_BIN="$HOME/go/bin"
+export PATH="$BUN_INSTALL/bin:$CARGO_BIN:$GO_BIN:$PATH"
+
+# Aliases
+alias ll="eza -l -g --icons --git"
+alias ls="eza --icons"
+alias la="eza -la --icons --git"
+alias tree="eza --tree --icons"
+alias cat="bat"
+alias vim="nvim"
+alias rice="~/.config/rice/launch.sh"
+alias reload="source ~/.zshrc"
+
+# Starship prompt
+eval "$(starship init zsh)"
+
+# Zoxide (better cd)
+eval "$(zoxide init zsh)"
+
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Node Version Manager
+eval "$(fnm env --use-on-cd)"
+
+# Catppuccin Mocha colors for FZF
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+# enable vim mode
+bindkey -v

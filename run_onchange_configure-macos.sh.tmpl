@@ -1,0 +1,42 @@
+#!/bin/bash
+{{ if eq .chezmoi.os "darwin" -}}
+
+echo "⚙️  Configuring macOS settings..."
+
+# Dock
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0.15
+defaults write com.apple.dock tilesize -int 36
+defaults write com.apple.dock show-recents -bool false
+defaults write com.apple.dock minimize-to-application -bool true
+defaults write com.apple.dock orientation -string "left"
+
+# Finder
+defaults write com.apple.finder AppleShowAllExtensions -bool true
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder ShowStatusBar -bool true
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+# System
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+defaults write NSGlobalDomain AppleHighlightColor -string "0.847059 0.847059 0.862745"
+defaults write NSGlobalDomain AppleAccentColor -int 6  # Pink accent
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+defaults write NSGlobalDomain _HIHideMenuBar -bool false
+defaults write NSGlobalDomain AppleReduceDesktopTinting -bool true
+
+# Screenshot location
+mkdir -p ~/Pictures/Screenshots
+defaults write com.apple.screencapture location -string "${HOME}/Pictures/Screenshots"
+
+# Restart affected services
+killall Dock
+killall Finder
+killall SystemUIServer
+
+echo "✅ macOS configuration complete!"
+{{ end -}}

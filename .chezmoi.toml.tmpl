@@ -1,0 +1,12 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $name := promptStringOnce . "name" "Full name" -}}
+{{- $computer_name := promptStringOnce . "computer_name" "Computer name (e.g., macbook-pro)" -}}
+
+[edit]
+    command = "nvim"
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    computer_name = {{ $computer_name | quote }}
+    aerospace_config_name = {{ $computer_name | quote }}

@@ -1,0 +1,6 @@
+theme = dark:catppuccin-frappe,light:catppuccin-latte
+
+keybind = shift+enter=text:\n
+
+font-family = "FiraCode Nerd Font"
+
