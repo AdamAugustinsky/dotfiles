@@ -14,7 +14,8 @@ export BUN_INSTALL="$HOME/.bun"
 export CARGO_BIN="$HOME/.cargo/bin"
 export GO_BIN="$HOME/go/bin"
 export LOCAL_BIN="$HOME/.local/bin"
-export PATH="$BUN_INSTALL/bin:$LOCAL_BIN:$CARGO_BIN:$GO_BIN:$PATH"
+export DOCKER_BIN="/Applications/Docker.app/Contents/Resources/bin/"
+export PATH="$BUN_INSTALL/bin:$LOCAL_BIN:$CARGO_BIN:$GO_BIN:$DOCKER_BIN:$PATH"
 
 # Aliases
 alias htop="btop"
