@@ -13,7 +13,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export BUN_INSTALL="$HOME/.bun"
 export CARGO_BIN="$HOME/.cargo/bin"
 export GO_BIN="$HOME/go/bin"
-export PATH="$BUN_INSTALL/bin:$CARGO_BIN:$GO_BIN:$PATH"
+export LOCAL_BIN="$HOME/.local/bin"
+export PATH="$BUN_INSTALL/bin:$LOCAL_BIN:$CARGO_BIN:$GO_BIN:$PATH"
 
 # Aliases
 alias htop="btop"
