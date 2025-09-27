@@ -1,5 +1,12 @@
 theme = dark:Catppuccin Frappe,light:Catppuccin Latte
 
+# Cursor animation settings
+cursor-style = block
+cursor-style-blink = true
+
+# Enable custom shader animation for cursor effects
+custom-shader = ~/.config/ghostty/shaders/cursor-glow.glsl
+custom-shader-animation = always
 
 keybind = shift+enter=text:\n
 
