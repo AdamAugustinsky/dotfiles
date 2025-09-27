@@ -27,6 +27,7 @@ alias cat="bat"
 alias vim="nvim"
 alias v="nvim"
 alias reload="source ~/.zshrc"
+alias cdchezmoi="cd ~/.local/share/chezmoi"
 
 # Starship prompt
 eval "$(starship init zsh)"
