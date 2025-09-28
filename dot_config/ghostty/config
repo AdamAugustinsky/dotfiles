@@ -10,5 +10,5 @@ custom-shader-animation = always
 
 keybind = shift+enter=text:\n
 
-font-family = "FiraCode Nerd Font"
-
+font-family = "JetBrainsMono Nerd Font"
+font-size = 16

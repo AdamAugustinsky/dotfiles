@@ -12,6 +12,10 @@ return {
     },
     config = function()
       require("claude-code").setup({
+        window = {
+          position = "vertical", -- Open in vertical split instead of horizontal
+          split_ratio = 0.3, -- Width of vertical split (30% of screen)
+        },
         keymaps = {
           toggle = {
             normal = "<C-,>", -- Normal mode keymap for toggling Claude Code, false to disable
