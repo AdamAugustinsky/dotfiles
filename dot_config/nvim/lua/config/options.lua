@@ -8,8 +8,8 @@ vim.opt.autochdir = false
 vim.g.root_spec = { "cwd" }
 
 -- Performance optimizations
-vim.opt.updatetime = 300      -- Faster completion
-vim.opt.timeoutlen = 300      -- Faster key sequence completion
-vim.opt.redrawtime = 1500     -- Time in milliseconds for redrawing the display
-vim.opt.synmaxcol = 200       -- Maximum column to search for syntax items
-vim.opt.lazyredraw = true     -- Don't redraw while executing macros
+vim.opt.updatetime = 300 -- Faster completion
+vim.opt.timeoutlen = 300 -- Faster key sequence completion
+vim.opt.redrawtime = 1500 -- Time in milliseconds for redrawing the display
+vim.opt.synmaxcol = 200 -- Maximum column to search for syntax items
+-- vim.opt.lazyredraw = true     -- Don't redraw while executing macros
