@@ -13,3 +13,6 @@ vim.opt.timeoutlen = 300 -- Faster key sequence completion
 vim.opt.redrawtime = 1500 -- Time in milliseconds for redrawing the display
 vim.opt.synmaxcol = 200 -- Maximum column to search for syntax items
 -- vim.opt.lazyredraw = true     -- Don't redraw while executing macros
+
+-- Disable inlay hints
+vim.lsp.inlay_hint.enable(false)
