@@ -1,0 +1,62 @@
+[
+  {
+    "context": "Editor && (vim_mode == normal || vim_mode == visual)",
+    "bindings": {
+      "] f": "vim::NextMethodStart",
+      "[ f": "vim::PreviousMethodStart"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
+    "bindings": {
+      "space g g": [
+        "task::Spawn",
+        { "task_name": "start lazygit", "reveal_target": "center" }
+      ],
+      "space a a": [
+        "task::Spawn",
+        { "task_name": "start aider", "reveal_target": "center" }
+      ],
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem",
+      "g r": "editor::FindAllReferences",
+      "space f f": "file_finder::Toggle",
+      "space s g": "pane::DeploySearch",
+      "space r n": "editor::Rename",
+      "space a c": [
+        "task::Spawn",
+        { "task_name": "Claude Code", "reveal_target": "center" }
+      ],
+      "space a d": [
+        "task::Spawn",
+        { "task_name": "Codex", "reveal_target": "center" }
+      ],
+      "space a o": [
+        "task::Spawn",
+        { "task_name": "Opencode", "reveal_target": "center" }
+      ],
+      "space b d ": "pane::CloseActiveItem"
+    }
+  },
+  {
+    // BLOCK A: Safe bindings for Terminal (Ctrl keys)
+    // We KEEP Terminal here so you can navigate out of Claude using Ctrl-h/l
+    "context": "(Editor && vim_mode == normal && !VimWaiting && !menu) || (ProjectPanel && not_editing) || Terminal || GitPanel",
+    "bindings": {
+      "ctrl-`": "workspace::ToggleBottomDock",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+    }
+  },
+  {
+    // BLOCK B: Space bindings (REMOVED Terminal)
+    // We REMOVED Terminal from the context here.
+    // Now, pressing space in the terminal will just type a space.
+    "context": "(Editor && vim_mode == normal && !VimWaiting && !menu) || (ProjectPanel && not_editing)",
+    "bindings": {
+      "space e": "workspace::ToggleRightDock"
+    }
+  }
+]
