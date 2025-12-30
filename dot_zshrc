@@ -1,23 +1,51 @@
-# Enable Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# ============================================================================
+# PERFORMANCE: Set PATH early (no subshells)
+# ============================================================================
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:/Applications/Docker.app/Contents/Resources/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+
+# Homebrew environment (without eval)
+export HOMEBREW_PREFIX="/opt/homebrew"
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+export HOMEBREW_REPOSITORY="/opt/homebrew"
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+
+# ============================================================================
+# ZSH OPTIONS & HISTORY
+# ============================================================================
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt HIST_IGNORE_ALL_DUPS    # No duplicate entries
+setopt HIST_FIND_NO_DUPS       # No duplicates in search
+setopt HIST_SAVE_NO_DUPS       # No duplicates when saving
+setopt SHARE_HISTORY           # Share history between sessions
+setopt INC_APPEND_HISTORY      # Write immediately, not on exit
+setopt EXTENDED_HISTORY        # Add timestamps
+setopt AUTO_CD                 # cd by typing directory name
+setopt AUTO_PUSHD              # Push dirs to stack automatically
+setopt PUSHD_IGNORE_DUPS       # No duplicate dirs in stack
+
+# ============================================================================
+# COMPLETION SYSTEM (with caching)
+# ============================================================================
+autoload -Uz compinit
+# Only regenerate compinit cache once per day
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
 fi
 
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'  # Case-insensitive
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
 
-# bun completions
-[ -s "/Users/adamaxelaugustinsky/.bun/_bun" ] && source "/Users/adamaxelaugustinsky/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export CARGO_BIN="$HOME/.cargo/bin"
-export GO_BIN="$HOME/go/bin"
-export LOCAL_BIN="$HOME/.local/bin"
-export DOCKER_BIN="/Applications/Docker.app/Contents/Resources/bin/"
-export PATH="$BUN_INSTALL/bin:$LOCAL_BIN:$CARGO_BIN:$GO_BIN:$DOCKER_BIN:$PATH"
-
-# Aliases
+# ============================================================================
+# ALIASES
+# ============================================================================
 alias htop="btop"
 alias ll="eza -l -g --icons --git"
 alias ls="eza --icons"
@@ -26,33 +54,58 @@ alias tree="eza --tree --icons"
 alias cat="bat"
 alias vim="nvim"
 alias v="nvim"
-alias reload="source ~/.zshrc"
+alias reload="exec zsh"
 alias cdchezmoi="cd ~/.local/share/chezmoi"
 
-# Starship prompt
+# ============================================================================
+# LAZY LOADING: fnm (Node Version Manager)
+# ============================================================================
+_fnm_lazy_load() {
+  unset -f node npm npx pnpm yarn fnm 2>/dev/null
+  eval "$(fnm env --use-on-cd)"
+}
+node()  { _fnm_lazy_load; node "$@" }
+npm()   { _fnm_lazy_load; npm "$@" }
+npx()   { _fnm_lazy_load; npx "$@" }
+pnpm()  { _fnm_lazy_load; pnpm "$@" }
+yarn()  { _fnm_lazy_load; yarn "$@" }
+fnm()   { _fnm_lazy_load; fnm "$@" }
+
+# ============================================================================
+# LAZY LOADING: bun completions
+# ============================================================================
+_bun_lazy_load() {
+  unset -f bun bunx 2>/dev/null
+  [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+}
+bun()  { _bun_lazy_load; bun "$@" }
+bunx() { _bun_lazy_load; bunx "$@" }
+
+# ============================================================================
+# PROMPT: Starship (fast, no p10k conflict)
+# ============================================================================
 eval "$(starship init zsh)"
 
-# Zoxide (better cd)
+# ============================================================================
+# TOOLS: Zoxide & FZF
+# ============================================================================
 eval "$(zoxide init zsh)"
 
-# FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Node Version Manager
-eval "$(fnm env --use-on-cd)"
-
-# Catppuccin Mocha colors for FZF
+# FZF with Catppuccin Mocha theme
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Load environment variables from .env file
-if [ -f ~/.env ]; then
-  set -a
-  source ~/.env
-  set +a
-fi
+# ============================================================================
+# ENVIRONMENT VARIABLES (from .env)
+# ============================================================================
+[[ -f ~/.env ]] && { set -a; source ~/.env; set +a; }
 
-# enable vim mode
-bindkey -v
+# ============================================================================
+# KEY BINDINGS
+# ============================================================================
+bindkey -v                          # Vim mode
+bindkey '^R' history-incremental-search-backward  # Ctrl+R for history search
+export KEYTIMEOUT=1                 # Faster mode switching
