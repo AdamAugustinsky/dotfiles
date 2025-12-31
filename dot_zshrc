@@ -56,6 +56,8 @@ alias vim="nvim"
 alias v="nvim"
 alias reload="exec zsh"
 alias cdchezmoi="cd ~/.local/share/chezmoi"
+alias claudeb="claude --dangerously-skip-permissions"
+
 
 # ============================================================================
 # LAZY LOADING: fnm (Node Version Manager)
