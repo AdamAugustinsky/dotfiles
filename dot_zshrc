@@ -111,3 +111,11 @@ export FZF_DEFAULT_OPTS=" \
 bindkey -v                          # Vim mode
 bindkey '^R' history-incremental-search-backward  # Ctrl+R for history search
 export KEYTIMEOUT=1                 # Faster mode switching
+
+# Git worktree: create new branch prefixed with project name and cd into it
+gwt() {
+  [[ -z "$1" ]] && { echo "Usage: gwt <branch-name>"; return 1; }
+  local project=$(basename "$(git rev-parse --show-toplevel)")
+  local dir="../${project}-$1"
+  git worktree add -b "$1" "$dir" && cd "$dir"
+}
